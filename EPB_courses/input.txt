@@ -1,0 +1,58 @@
+# in EPB
+
+120 credits masters
+- Electromechanical Engineering, https://www.ulb.be/en/programme/ma-irem
+https://www.ulb.be/en/programme/m-iremr
+https://www.ulb.be/en/programme/m-iremi
+
+- Computer Science and Engineering with focus Professional, https://www.ulb.be/en/programme/ma-irif
+https://www.ulb.be/en/programme/m-irifs
+
+- Architecture and Engineering, https://www.ulb.be/en/programme/ma-irar
+https://www.ulb.be/en/programme/ma-irar
+
+- Biomedical Engineering, https://www.ulb.be/en/programme/ma-ircb
+https://www.ulb.be/en/programme/ma-ircb
+
+- Civil Engineering, https://www.ulb.be/en/programme/ma-ircn
+https://www.ulb.be/en/programme/ma-ircn
+
+- Chemical and Materials Engineering, https://www.ulb.be/en/programme/ma-irma
+https://www.ulb.be/en/programme/ma-irma
+
+- Physical Engineering, https://www.ulb.be/en/programme/ma-irph
+https://www.ulb.be/en/programme/ma-irph
+
+- Electrical Engineering, https://www.ulb.be/en/programme/ma-irel
+https://www.ulb.be/en/programme/ma-irel
+
+60 credits masters
+- Nuclear engineering, https://www.ulb.be/en/programme/ms-nuap
+https://www.ulb.be/en/programme/ms-nuap
+
+- Heritage, conservation and restoration, https://www.ulb.be/en/programme/ms-gepc
+https://www.ulb.be/en/programme/ms-gepc
+
+- Nanotechnology, https://www.ulb.be/en/programme/ms-nate
+https://www.ulb.be/en/programme/ms-nate
+
+- Transition urbanism and regional planning, https://www.ulb.be/en/programme/ms-urde
+https://www.ulb.be/en/programme/ms-urde
+
+- Data Science, Big Data, https://www.ulb.be/en/programme/ms-bgda
+https://www.ulb.be/en/programme/ms-bgda
+
+180 credits bachelors
+- Bachelor in engineering sciences, https://www.ulb.be/en/programme/ba-irci
+https://www.ulb.be/en/programme/ba-ircib
+https://www.ulb.be/en/programme/ba-ircic
+
+- Bachelor in engineering: architecture, https://www.ulb.be/en/programme/ba-irar
+https://www.ulb.be/en/programme/ba-irar
+
+
+# not eligible
+
+https://www.ulb.be/en/programme/m-irifi
+https://www.ulb.be/en/programme/m-secuc
+https://www.ulb.be/en/programme/m-secum

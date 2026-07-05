@@ -1,0 +1,6 @@
+.DS_Store
+.scratch/
+scratch_env/
+**/__pycache__/
+*.log
+*.pdf

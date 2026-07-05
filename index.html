@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ULB EPB Incoming Learning Agreement Validator</title>
+  <!-- Sleek fonts from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- PDF.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+</head>
+<body>
+
+  <!-- Background decorative glowing blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>ULB EPB Incoming Learning Agreement Validator</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Disclaimer Banner -->
+    <div class="disclaimer-banner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="disclaimer-banner-icon">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span class="disclaimer-banner-text">
+        <strong>Information Only:</strong> This tool is for information purposes only. The official RIMI regulations, particularly Chapter 6, take absolute precedence. Read the official regulations at <a href="https://polytech.ulb.be/fr/international/reglement-interieur-de-la-mobilite-internationale" target="_blank" class="disclaimer-link">polytech.ulb.be/fr/international/reglement-interieur-de-la-mobilite-internationale</a>.
+      </span>
+    </div>
+ 
+    <main class="dashboard-grid">
+      
+      <!-- SIDEBAR: Controls, Uploads, Rules -->
+      <section class="sidebar-panel">
+
+        <!-- Upload LA PDF Card -->
+        <div class="glass-card entry-card" id="upload-card">
+          <div class="upload-header" id="upload-toggle-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h2 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-header">
+                <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Upload LA PDF
+            </h2>
+            <span class="toggle-icon-arrow" id="upload-toggle-arrow" style="transition: transform 0.3s ease; display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </span>
+          </div>
+          
+          <div class="upload-collapsible-content" id="upload-collapsible-content" style="display: flex; flex-direction: column; gap: 1.25rem; width: 100%;">
+            <p class="card-description">Upload your LA PDF to extract course selections.</p>
+            
+            <div class="drop-zone" id="drop-zone">
+              <input type="file" id="file-input" accept="application/pdf" class="file-input-hidden">
+              <div class="drop-zone-content">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="upload-icon">
+                   <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M12 18V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M9 15L12 12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="drop-text-primary">Drag &amp; drop LA PDF here</p>
+                <p class="drop-text-secondary">or click to browse local files</p>
+              </div>
+            </div>
+
+            <!-- Status message and disclaimer -->
+            <div class="parser-feedback-area">
+              <div id="upload-status-message" class="upload-status-info idle">Ready to Parse</div>
+              <div class="disclaimer-text">⚠️ <strong>Disclaimer:</strong> The client-side parser uses automated heuristics to extract tables and may not always work perfectly. Always double-check the extracted courses and ECTS.</div>
+            </div>
+   
+
+          </div>
+        </div>
+
+        <!-- Mobility Type Card -->
+        <div class="glass-card mobility-card">
+          <h2 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-header">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 12V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 22L2 17V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 22L22 17V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Mobility Type
+          </h2>
+          <p class="card-description">Define the target study program details.</p>
+          
+          <div class="form-group">
+            <label for="mobility-context-select">Programme Type</label>
+            <select id="mobility-context-select">
+              <option value="semester-1">One Semester (1st)</option>
+              <option value="semester-2">One Semester (2nd)</option>
+              <option value="full-year">Two Semesters (Full Year)</option>
+              <option value="double-diploma">Double Diploma</option>
+            </select>
+          </div>
+        </div>
+ 
+        <!-- Validation Rules Card -->
+        <div class="glass-card rules-card" id="rules-card">
+          <div class="rules-header" id="rules-toggle-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h2 class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-header">
+                <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Validation Rules
+            </h2>
+            <span class="toggle-icon-arrow" id="rules-toggle-arrow" style="transition: transform 0.3s ease; display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); transform: rotate(180deg);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </span>
+          </div>
+          
+          <div class="rules-container" id="rules-container" style="display: none;">
+            <!-- Rules will be injected here dynamically -->
+          </div>
+        </div>
+ 
+      </section>
+ 
+      <!-- MAIN AREA: Table and Results -->
+      <section class="main-panel">
+
+        <!-- Student Metadata Info Bar (shown after parse) -->
+        <div class="student-info-bar" id="student-info-bar" style="display:none">
+          <div class="student-info-item">
+            <span class="student-info-label">Student</span>
+            <span class="student-info-value" id="meta-student" contenteditable="true" onblur="updateMetadataState('studentName', this.innerText)">—</span>
+          </div>
+          <div class="student-info-divider"></div>
+          <div class="student-info-item">
+            <span class="student-info-label">Origin University</span>
+            <span class="student-info-value" id="meta-institution" contenteditable="true" onblur="updateMetadataState('sendingInstitution', this.innerText)">—</span>
+          </div>
+          <div class="student-info-divider"></div>
+          <div class="student-info-item">
+            <span class="student-info-label">Mobility Period</span>
+            <span class="student-info-value" id="meta-period" contenteditable="true" onblur="updateMetadataState('mobilityPeriod', this.innerText)">—</span>
+          </div>
+        </div>
+        
+        <!-- Extracted Courses Table -->
+        <div class="glass-card courses-card">
+          <div class="card-header-flex">
+            <div>
+              <h2 class="card-title">List of Courses</h2>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-courses" style="display: none;">Clear All</button>
+          </div>
+
+          <div class="add-course-inline">
+            <input type="text" id="add-course-code-input" placeholder="Quick add course by code (e.g. INFO-H410)" class="inline-code-input">
+            <button class="btn btn-primary btn-sm btn-icon" id="btn-add-course-code">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Add Course
+            </button>
+          </div>
+
+          <div class="table-scroll-container">
+            <table class="courses-table" id="courses-table">
+              <thead>
+                <tr>
+                  <th style="width: 12%">Course Code</th>
+                  <th style="width: 35%">Course Title</th>
+                  <th style="width: 18%">Status</th>
+                  <th style="width: 10%" class="center-align">Link</th>
+                  <th style="width: 13%">Term</th>
+                  <th style="width: 7%" class="center-align">ECTS</th>
+                  <th style="width: 5%" class="center-align">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="courses-tbody">
+                <!-- Courses injected here -->
+                <tr class="empty-state-row" id="empty-state">
+                  <td colspan="7">
+                    <div class="table-empty-state">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <p>No courses added yet. Upload a PDF or add manually.</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-footer-summary">
+            <div class="summary-stat">
+              <span class="stat-label">Total Courses:</span>
+              <span class="stat-val" id="total-courses-count">0</span>
+            </div>
+            <div class="summary-stat highlight">
+              <span class="stat-label">Total ECTS Credits:</span>
+              <span class="stat-val" id="total-ects-count">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Results Dashboard -->
+        <div class="glass-card criteria-card">
+          <h2 class="card-title">Validation Dashboard</h2>
+          <p class="card-description">Real-time status of academic requirements.</p>
+
+          <div class="results-grid" id="results-grid">
+            <!-- Results cards injected here -->
+          </div>
+        </div>
+
+        <!-- Validation Summary Card -->
+        <div class="glass-card summary-card" id="validation-summary-card" style="display: none;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+            <h2 class="card-title" style="margin:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-header">
+                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Validation Summary
+            </h2>
+            <button id="btn-copy-summary" onclick="copyValidationSummary()" class="btn btn-secondary btn-sm" title="Copy summary to clipboard" style="display:flex;align-items:center;gap:6px;white-space:nowrap;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy
+            </button>
+          </div>
+          <div class="validation-summary-content" id="validation-summary-content">
+            <!-- Dynamic summary text goes here -->
+          </div>
+          <div class="recommendation-section" id="recommendation-section" style="display:none; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+            <label class="recommendation-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;opacity:0.7">
+                <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+              Coordinator Recommendation
+            </label>
+            <div class="recommendation-input" id="recommendation-input" contenteditable="true" placeholder="Add your recommendation or notes here..."></div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast notification container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
