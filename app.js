@@ -340,7 +340,7 @@ function setupEventListeners() {
   if (btnAddCourseCode) {
     btnAddCourseCode.addEventListener('click', () => {
       const codeInput = document.getElementById('add-course-code-input');
-      const code = codeInput.value.trim().toUpperCase();
+      const code = codeInput.value.replace(/\s+/g, '').toUpperCase();
       
       if (!code) {
         showToast('Please enter a course code.', 'error');
@@ -634,11 +634,11 @@ function normalizeTerm(raw) {
   const t = (raw || '').trim();
   if (!t) return '1st';
   // Both semesters / annual
-  if (/annuel|annual|anual|annuale|ann[eé]e|academic\s*year|full.*year/i.test(t)) return '1st+2nd';
+  if (/annuel|annual|anual|annuale|ann[eé]e|academic\s*year|full.*year|first\s*and\s*second|1st\s*\+\s*2nd/i.test(t)) return '1st+2nd';
   // Second semester — check before first to avoid "primo/secondo" overlap
-  if (/\b(2\s*nd|2[eè]me|2\.)\b|2[°º]\s*sem|second[oa]\s*sem|segundo\s*sem|deuxi[eè]me\s*sem|spring|printemps|fr.hling|verano|\b[QS]2\b|sem(?:estre|ester|cuatrimestre)?\s*2/i.test(t)) return '2nd';
+  if (/\b(2\s*nd|2[eè]me|2\.)\b|2[°º]\s*sem|second(?!(\s*and\s*second))|spring|printemps|fr.hling|verano|\b[QS]2\b|sem(?:estre|ester|cuatrimestre)?\s*2/i.test(t) || t.toLowerCase().includes('second term') || t.toLowerCase().includes('second semester')) return '2nd';
   // First semester
-  if (/\b(1\s*st|1er|1\.)\b|1[°º]\s*sem|prim[oo]\s*sem|primer\s*sem|premier\s*sem|primeiro\s*sem|autumn|herbst|oto[nñ]o|fall|automne|\b[QS]1\b|sem(?:estre|ester|cuatrimestre)?\s*1/i.test(t)) return '1st';
+  if (/\b(1\s*st|1er|1\.)\b|1[°º]\s*sem|prim[oo]\s*sem|primer\s*sem|premier\s*sem|primeiro\s*sem|autumn|herbst|oto[nñ]o|fall|automne|\b[QS]1\b|sem(?:estre|ester|cuatrimestre)?\s*1/i.test(t) || t.toLowerCase().includes('first term') || t.toLowerCase().includes('first semester')) return '1st';
   // Unknown: return as-is
   return t;
 }
@@ -979,15 +979,20 @@ function parsePdfDataToCourses(allItems) {
   allLines.forEach(line => {
     const codeMatch = line.joinedStr.match(codeRegex);
     if (codeMatch) {
-      const code = codeMatch[1].trim();
+      const rawCode = codeMatch[1];
+      const code = rawCode.replace(/\s+/g, '');
       if (isErasmusUniCode(code)) return;
 
-      const codeItem = line.items.find(item => item.str.includes(code)) || line.items[0];
+      const codeItem = line.items.find(item => {
+        const cleanItemStr = item.str.replace(/\s+/g, '');
+        return cleanItemStr.includes(code) || code.includes(cleanItemStr);
+      }) || line.items[0];
 
       const exists = anchors.some(a => a.code === code && a.pageNum === line.pageNum && Math.abs(a.y - line.y) < 5);
       if (!exists) {
         anchors.push({
           code,
+          rawCode,
           y: line.y,
           pageNum: line.pageNum,
           x: codeItem.x,
@@ -1090,6 +1095,7 @@ function parsePdfDataToCourses(allItems) {
     rows.sort((a, b) => b.y - a.y);
 
     let code = anchor.code;
+    let rawCode = anchor.rawCode || code;
     let term = '';
     let ects = '';
     let titleParts = [];
@@ -1109,16 +1115,16 @@ function parsePdfDataToCourses(allItems) {
       let lineStr = row.items.map(item => item.str).join(' ');
 
       if (code) {
-        const codeIdx = lineStr.indexOf(code);
+        const codeIdx = lineStr.indexOf(rawCode);
         if (codeIdx !== -1) {
           lineStr = lineStr.substring(codeIdx);
         }
         
-        lineStr = lineStr.replace(code, '');
+        lineStr = lineStr.replace(rawCode, '');
         const codeClean = code.replace(/\s/g, '');
         const lineClean = lineStr.replace(/\s/g, '');
         if (lineClean.includes(codeClean)) {
-          const codeParts = code.split(/\s*-\s*/);
+          const codeParts = rawCode.split(/\s*-\s*/);
           codeParts.forEach(p => {
             if (p) {
               lineStr = lineStr.replace(new RegExp('\\b' + p + '\\b', 'g'), '');
@@ -1196,7 +1202,7 @@ function parsePdfDataToCourses(allItems) {
         // ECTS and Term alignment
         const match = dbMatches[0];
         const dbEcts = match.Credits ? parseInt(match.Credits, 10) || 0 : 0;
-        const dbTerm = normalizeTerm(match.Term);
+        const dbTerm = normalizeTerm(match.Terms);
 
         if (dbEcts > 0 && finalEcts !== dbEcts) {
           const hasDbEctsInRow = items.some(item => {
@@ -1372,7 +1378,8 @@ function updateCourseState(id, field, value) {
     
     // Re-verify code with CSV database if changed
     if (field === 'code') {
-      const code = value.trim().toUpperCase();
+      const code = value.replace(/\s+/g, '').toUpperCase();
+      course.code = code;
       const dbMatches = ulbCoursesDatabase.filter(x => x.CourseCode.toUpperCase() === code);
       const epbMatch = dbMatches.find(x => x.Eligible === 'True');
       
